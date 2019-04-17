@@ -21,70 +21,6 @@ app.get('/', (request, response) => {
     });
 });
 
-app.get('/static', (request, response) => {
-    response.render('static.hbs', {
-        title: 'Static page',
-        header: 'Static Page'
-    });
-});
-
-var getCapital = (country) => {
-    return new Promise((resolve, reject) => {
-        request({
-            url: `https://restcountries.eu/rest/v2/name/${encodeURIComponent(country)}?fullText=true`,
-            json: true
-        }, (error, response, body) => {
-            if (error) {
-                reject('Cannot connect to Rest Countries');
-            } else if (body.status == 404) {
-                reject('Cannot find requested country');
-            } else if ((body[0].name).toUpperCase() == (country).toUpperCase()) {
-                resolve(body[0].capital);
-            }
-        });
-    });
-};
-
-var getTemp = (capital) => {
-    return new Promise((resolve, reject) => {
-        request({
-            url: `https://deckofcardsapi.com/api/deck/new/draw/?count=${capital}&units=imperial&appid=41801cbcfc459a16d83d3e646db2ed3b`,
-            json: true
-        }, (error, response, body) => {
-            resolve(body.main.temp);
-        });
-    })
-};
-
-var getWind = (capital) => {
-    return new Promise((resolve, reject) => {
-        request({
-            url: `https://deckofcardsapi.com/api/deck/new/draw/?count=${capital}&units=imperial&appid=41801cbcfc459a16d83d3e646db2ed3b`,
-            json: true
-        }, (error, response, body) => {
-            resolve(body.wind.speed);
-        });
-    })
-};
-
-
-
-
-country = "asdasdasd";
-
-getCapital(country).then((result) => {
-    capital = result
-    return getTemp(result);
-}).then((result) => {
-    temp = result
-    return getWind(capital);
-}).then((result) => {
-    wind = result
-    weather = (`The weather in ${capital}, capital of ${country} is ${temp} degrees Fahrenheit with wind speed of ${wind}`);
-}).catch((error) => {
-    console.log('Error:', error);
-    weather = "Error: Cannot find requested country";
-});
 
 count = 5
 var getCards = (count) => {
@@ -97,6 +33,7 @@ var getCards = (count) => {
         });
     })
 };
+
 
 query = 'galaxy'
 var getNasa = (count) => {
@@ -163,14 +100,6 @@ app.get('/nasa', (request, response) => {
 
 });
 
-
-app.get('/weather', (request, response) => {
-    response.render('weather.hbs', {
-        title: 'Weather page',
-        header: 'Weather',
-        weather: weather
-    });
-});
 
 
 app.listen(port, () => {
