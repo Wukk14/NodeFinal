@@ -17,7 +17,7 @@ hbs.registerHelper('getCurrentYear', () => {
 app.get('/', (request, response) => {
     response.render('main.hbs', {
         title: 'Main page',
-        header: 'Main Page'
+        header: 'Home Page'
     });
 });
 
