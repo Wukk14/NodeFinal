@@ -100,6 +100,6 @@ app.get('/weather', (request, response) => {
 });
 
 
-app.listen(ports, () => {
+app.listen(port, () => {
     console.log(`Server is up on port ${port}`);
 });
