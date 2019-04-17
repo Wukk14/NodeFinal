@@ -100,6 +100,6 @@ app.get('/weather', (request, response) => {
 });
 
 
-app.listen(8080, () => {
-    console.log('Server is up on port 8080');
+app.listen(ports, () => {
+    console.log(`Server is up on port ${port}`);
 });
